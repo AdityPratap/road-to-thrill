@@ -1,0 +1,70 @@
+{
+  "experiences": [
+    {
+      "id": 1,
+      "title": "Mountain Trail Adventure 2024",
+      "location": "Rocky Mountains, Colorado",
+      "date": "March 2024",
+      "image": "/images/experiences/mountain-1.jpg",
+      "thumbnail": "/images/experiences/thumb/mountain-1.jpg",
+      "description": "Conquering the Rocky Mountains with an amazing group of riders.",
+      "riders": 24,
+      "miles": 350
+    },
+    {
+      "id": 2,
+      "title": "Coastal Highway Cruise",
+      "location": "Pacific Coast Highway, California",
+      "date": "February 2024",
+      "image": "/images/experiences/coastal-1.jpg",
+      "thumbnail": "/images/experiences/thumb/coastal-1.jpg",
+      "description": "Sunset rides along the most beautiful coastal roads in America.",
+      "riders": 18,
+      "miles": 280
+    },
+    {
+      "id": 3,
+      "title": "Desert Sunset Rally",
+      "location": "Mojave Desert, Nevada",
+      "date": "January 2024",
+      "image": "/images/experiences/desert-1.jpg",
+      "thumbnail": "/images/experiences/thumb/desert-1.jpg",
+      "description": "Camping under the stars and riding through breathtaking desert landscapes.",
+      "riders": 32,
+      "miles": 420
+    },
+    {
+      "id": 4,
+      "title": "Fall Colors Tour",
+      "location": "Blue Ridge Parkway, North Carolina",
+      "date": "October 2023",
+      "image": "/images/experiences/fall-1.jpg",
+      "thumbnail": "/images/experiences/thumb/fall-1.jpg",
+      "description": "Witnessing the spectacular autumn colors on two wheels.",
+      "riders": 28,
+      "miles": 310
+    },
+    {
+      "id": 5,
+      "title": "Winter Wanderlust",
+      "location": "Utah National Parks",
+      "date": "December 2023",
+      "image": "/images/experiences/winter-1.jpg",
+      "thumbnail": "/images/experiences/thumb/winter-1.jpg",
+      "description": "Exploring snow-capped mountains and red rock canyons.",
+      "riders": 15,
+      "miles": 390
+    },
+    {
+      "id": 6,
+      "title": "Spring Break Rally",
+      "location": "Texas Hill Country",
+      "date": "April 2024",
+      "image": "/images/experiences/spring-1.jpg",
+      "thumbnail": "/images/experiences/thumb/spring-1.jpg",
+      "description": "Wildflowers, winding roads, and wonderful company.",
+      "riders": 45,
+      "miles": 520
+    }
+  ]
+}
