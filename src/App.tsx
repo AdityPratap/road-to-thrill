@@ -13,8 +13,8 @@ function App() {
     <Layout>
       <Header/>
       <Hero />
-      <WhyJoin />
       <Calendar />
+      <WhyJoin />
       <ExperiencesSimple />
       <Join/>
       <Contact/>
