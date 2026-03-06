@@ -85,7 +85,6 @@ const Contact: React.FC = () => {
                     >
                       roadthrill@gmail.com
                     </a>
-                    <p className="text-sm text-gray-500 mt-1">We reply within 24 hours</p>
                   </div>
                 </div>
 
@@ -104,7 +103,6 @@ const Contact: React.FC = () => {
                     >
                       @roadthrill
                     </a>
-                    <p className="text-sm text-gray-500 mt-1">Quickest response</p>
                   </div>
                 </div>
 
