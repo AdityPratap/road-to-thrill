@@ -32,8 +32,8 @@ const imageMap: Record<string, string> = {
   // 'Coastal Highway Cruise': coastalImg,
   // 'Desert Sunset Rally': desertImg,
   // 'Fall Colors Tour': fallImg,
-  'Winter Wanderlust': winterImg,
-  'Spring Break Rally': springImg,
+  'This is RTCruise Vietnam Ride 2025': winterImg,
+  'Conquering Uncharted Roads - 2025': springImg,
 }
 
 const Experiences: React.FC = () => {

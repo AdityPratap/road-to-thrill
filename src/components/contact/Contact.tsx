@@ -1,6 +1,8 @@
 import React, { useState, useRef } from 'react'
 import { Mail, Phone, MapPin, Facebook, Instagram, Twitter, MessageSquare, Send, CheckCircle, AlertCircle } from 'lucide-react'
-import emailjs from '@emailjs/browser'
+
+// Your Google Apps Script URL for contact form
+const CONTACT_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzkaK7D9Qk1unyu5LAAkegHsUSeDnNtTa_N1jvORl9ldN3lEIhHg39WjO3cApL_N08/exec' // Replace with your deployed URL
 
 const Contact: React.FC = () => {
   const formRef = useRef<HTMLFormElement>(null)
@@ -14,27 +16,27 @@ const Contact: React.FC = () => {
     setSubmitError('')
     
     try {
-      // Initialize EmailJS with your public key
-      emailjs.init('YOUR_PUBLIC_KEY') // Replace with your actual public key from EmailJS
+      const formData = new FormData(formRef.current!)
       
-      // Send email using EmailJS
-      const result = await emailjs.sendForm(
-        'YOUR_SERVICE_ID', // Replace with your EmailJS service ID
-        'YOUR_TEMPLATE_ID', // Replace with your EmailJS template ID
-        formRef.current!,
-        'YOUR_PUBLIC_KEY' // Replace with your actual public key
-      )
+      // Send to Google Apps Script
+      const response = await fetch(CONTACT_SCRIPT_URL, {
+        method: 'POST',
+        body: formData
+      })
       
-      if (result.status === 200) {
-        setSubmitSuccess(true)
-        formRef.current?.reset()
-        
-        // Reset success message after 5 seconds
-        setTimeout(() => setSubmitSuccess(false), 5000)
-      }
+      // Check response
+      const responseText = await response.text()
+      console.log('Contact form response:', responseText)
+      
+      setSubmitSuccess(true)
+      formRef.current?.reset()
+      
+      // Reset success message after 5 seconds
+      setTimeout(() => setSubmitSuccess(false), 5000)
+      
     } catch (error) {
-      setSubmitError('Failed to send message. Please try again or email us directly at thrill.india@gmail.com')
-      console.error('Email error:', error)
+      setSubmitError('Failed to send message. Please try again or email us directly at roadthrill@gmail.com')
+      console.error('Contact form error:', error)
     } finally {
       setIsSubmitting(false)
     }
@@ -78,24 +80,31 @@ const Contact: React.FC = () => {
                   <div>
                     <h4 className="font-semibold text-white mb-1">Email Us</h4>
                     <a 
-                      href="mailto:thrill.india@gmail.com" 
+                      href="mailto:roadthrill@gmail.com" 
                       className="text-gray-400 hover:text-red-500 transition-colors"
                     >
                       roadthrill@gmail.com
                     </a>
-                    {/* <p className="text-sm text-gray-500 mt-1">We reply within 24 hours</p> */}
+                    <p className="text-sm text-gray-500 mt-1">We reply within 24 hours</p>
                   </div>
                 </div>
 
-                {/* Phone */}
+                {/* Instagram DM */}
                 <div className="flex items-start gap-4 group">
-                  <div className="w-12 h-12 rounded-full bg-red-600/20 flex items-center justify-center group-hover:bg-red-600/30 transition-colors">
-                    <Phone className="w-5 h-5 text-red-500" />
+                  <div className="w-12 h-12 rounded-full bg-purple-600/20 flex items-center justify-center group-hover:bg-purple-600/30 transition-colors">
+                    <Instagram className="w-5 h-5 text-purple-500" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-white mb-1">Call Us</h4>
-                    <p className="text-gray-400">+91 98765 43210</p>
-                    <p className="text-sm text-gray-500 mt-1">Mon-Fri, 9 AM - 6 PM IST</p>
+                    <h4 className="font-semibold text-white mb-1">DM us on Instagram</h4>
+                    <a 
+                      href="https://www.instagram.com/direct/t/115664406484445/" 
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-gray-400 hover:text-purple-500 transition-colors"
+                    >
+                      @roadthrill
+                    </a>
+                    <p className="text-sm text-gray-500 mt-1">Quickest response</p>
                   </div>
                 </div>
 
@@ -107,6 +116,7 @@ const Contact: React.FC = () => {
                   <div>
                     <h4 className="font-semibold text-white mb-1">Ride Base</h4>
                     <p className="text-gray-400">India</p>
+                    <p className="text-sm text-gray-500 mt-1">Multiple chapters nationwide</p>
                   </div>
                 </div>
               </div>
@@ -121,13 +131,14 @@ const Contact: React.FC = () => {
               <div className="flex gap-4">
                 {[
                   { Icon: Facebook, href: 'https://www.facebook.com/share/g/1L6YCrkhBM/?mibextid=wwXIfr', label: 'Facebook', color: 'hover:bg-blue-600' },
-                  { Icon: Instagram, href: 'https://www.instagram.com/roadthrill?igsh=MWVuN3czM2RiZmZ3ZQ==', label: 'Instagram', color: 'hover:bg-pink-600' },
-                  { Icon: Twitter, href: 'https://x.com/road_thrill?s=11&t=rJ9lEZrn5KAFZ1QS_RUQVA', label: 'YouTube', color: 'hover:bg-red-600' },
-                  { Icon: MessageSquare, href: '#', label: 'WhatsApp', color: 'hover:bg-green-600' }
+                  { Icon: Instagram, href: 'https://www.instagram.com/direct/t/115664406484445/', label: 'Instagram', color: 'hover:bg-pink-600' },
+                  { Icon: Twitter, href: 'https://x.com/road_thrill?s=11&t=rJ9lEZrn5KAFZ1QS_RUQVA', label: 'YouTube', color: 'hover:bg-red-600' }
                 ].map(({ Icon, href, label, color }) => (
                   <a
                     key={label}
                     href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:scale-110 transition-all duration-300 group"
                     aria-label={label}
                   >
@@ -146,7 +157,7 @@ const Contact: React.FC = () => {
                   <p className="text-sm text-gray-400">We value your time and always respond within a day</p>
                 </div>
               </div>
-            </div> */}
+            </div>*/}
           </div>
 
           {/* Contact Form */}
@@ -222,8 +233,6 @@ const Contact: React.FC = () => {
                 />
               </div>
 
-              <input type="hidden" name="to_email" value="thrill.india@gmail.com" />
-
               <button
                 type="submit"
                 disabled={isSubmitting}
@@ -247,11 +256,11 @@ const Contact: React.FC = () => {
           </div>
         </div>
 
-        {/* Map or Additional Info */}
+        {/* Direct Email Link */}
         <div className="mt-12 text-center">
           <p className="text-gray-500 text-sm">
             Prefer email? Write to us directly at{' '}
-            <a href="mailto:thrill.india@gmail.com" className="text-red-500 hover:text-red-400 font-semibold">
+            <a href="mailto:roadthrill@gmail.com" className="text-red-500 hover:text-red-400 font-semibold">
               roadthrill@gmail.com
             </a>
           </p>

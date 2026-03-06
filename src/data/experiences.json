@@ -3,7 +3,7 @@
     {
       "id": 1,
       "title": "LEH Trip",
-      "location": "PAN India",
+      "location": "Leh,India",
       "date": "January 2026",
       "image": "/images/experiences/LEH81.jpg",
       "thumbnail": "/images/experiences/LEH81.jpg",
@@ -13,10 +13,22 @@
       "galleryLink" : "https://drive.google.com/drive/folders/1jTMIFv2mCOClmyCNb2fOnme3uUl98gtn?usp=sharing"
     },
     {
-      "id": 5,
-      "title": "Winter Wanderlust",
-      "location": "Utah National Parks",
-      "date": "December 2023",
+      "id": 2,
+      "title": "Conquering Uncharted Roads - 2025",
+      "location": "India",
+      "date": "April 2025",
+      "image": "/images/experiences/spring-1.jpg",
+      "thumbnail": "/images/experiences/thumb/spring-1.jpg",
+      "description": "Wildflowers, winding roads, and wonderful company.",
+      "riders": 45,
+      "miles": 520,
+      "galleryLink" : "https://drive.google.com/drive/folders/1IIHKqC00C6oEz6zaf0zQLpn9IjMxvRQD?usp=sharing"
+    },
+    {
+      "id": 3,
+      "title": "This is RTCruise Vietnam Ride 2025",
+      "location": "Vietnam",
+      "date": "December 2025",
       "image": "/images/experiences/winter-1.jpg",
       "thumbnail": "/images/experiences/thumb/winter-1.jpg",
       "description": "Exploring snow-capped mountains and red rock canyons.",
@@ -25,16 +37,16 @@
       "galleryLink": "https://drive.google.com/drive/folders/1dL9yfPlpwj_i0lnGAB6171JQshKQlvQe?usp=sharing"
     },
     {
-      "id": 6,
-      "title": "Spring Break Rally",
-      "location": "Texas Hill Country",
-      "date": "April 2024",
+      "id": 4,
+      "title": "Coming Soon",
+      "location": "Coming Soon",
+      "date": "soon",
       "image": "/images/experiences/spring-1.jpg",
       "thumbnail": "/images/experiences/thumb/spring-1.jpg",
-      "description": "Wildflowers, winding roads, and wonderful company.",
+      "description": "--",
       "riders": 45,
       "miles": 520,
-      "galleryLink" : "https://drive.google.com/drive/folders/1IIHKqC00C6oEz6zaf0zQLpn9IjMxvRQD?usp=sharing"
+      "galleryLink" : "#"
     }
   ]
 }

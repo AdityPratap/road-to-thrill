@@ -8,6 +8,7 @@ export default {
     extend: {
       fontFamily: {
         sans: ['Poppins', 'sans-serif'],
+        display: ['Poppins', 'sans-serif'], // Add display font (using same Poppins)
       },
       colors: {
         primary: {
@@ -21,6 +22,12 @@ export default {
           700: '#0369a1',
           800: '#075985',
           900: '#0c4a6e',
+        },
+        red: {
+          500: '#ef4444',
+          600: '#DC2626', // Your primary red
+          700: '#b91c1c',
+          800: '#991b1b',
         },
       },
     },

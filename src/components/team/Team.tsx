@@ -8,7 +8,8 @@ import arpan from '../../assets/images/team/arpan.jpg'
 import kamal from '../../assets/images/team/kamal.jpg'
 import Prateek from '../../assets/images/team/Prateek.jpg'
 import Praveen from '../../assets/images/team/Praveen.jpg'
-
+import Manish from '../../assets/images/team/manish.jpg'
+import Naveen from '../../assets/images/team/Naveen.jpg'
 // Import team section background image
 import teamBg from '../../assets/images/experiences/team-bg.jpg' // Add your team background image here
 
@@ -63,8 +64,9 @@ const Team: React.FC = () => {
   const admins: TeamMember[] = [
     { name: "Sandeep", role: "RT Bengaluru Admin", location: "Bengaluru", image: rider },
     { name: "Abhishek", role: "RT Bengaluru Admin", location: "Bengaluru", image: abhishekImg },
-    { name: "Naveen Nembhwani", role: "RT Vizag Admin", location: "Vizag", image: rider },
+    { name: "Naveen Nembhwani", role: "RT Vizag Admin", location: "Vizag", image: Naveen },
     { name: "Praveen Patkar", role: "RT Hyderabad Admin", location: "Hyderabad", image: Praveen },
+    { name: "Manish Khandat", role: "RT Hyderabad Admin", location: "Hyderabad", image: Manish },
     { name: "Prateek Swarnkar", role: "RT Cruise Admin", location: "Cruise", image: Prateek },
     { name: "Manju PC", role: "RT Mysuru Admin", location: "Mysuru", image: rider },
     { name: "Darshan Kalmane", role: "RT Shivmoga Admin", location: "Shivmoga", image: rider },
@@ -283,7 +285,7 @@ const Team: React.FC = () => {
           </div>
         </div>
 
-        {/* Join Team CTA */}
+        {/* Join Team CTA
         <div className="text-center mt-16">
           <p className="text-gray-300 mb-4">Want to lead rides in your city?</p>
           <a
@@ -292,7 +294,7 @@ const Team: React.FC = () => {
           >
             Become an RT Admin
           </a>
-        </div>
+        </div> */}
       </div>
     </section>
   )
