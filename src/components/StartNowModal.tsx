@@ -1,12 +1,10 @@
 import React, { useState } from 'react'
-import type { SubmitHandler } from 'react-hook-form'
-import { useForm } from 'react-hook-form'
+import { useForm, SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { User, MapPin, Briefcase, Calendar, Heart, Send, Bike, CheckCircle } from 'lucide-react'
-import joinBg from '../../assets/images/join/join-bg.jpg'
+import { User, MapPin, Briefcase, Calendar, Heart, Send, Bike, CheckCircle, X } from 'lucide-react'
 
-// Form validation schema
+// Form validation schema (same as Join section)
 const joinFormSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
   dob: z.string().regex(/^\d{2}\/\d{2}\/\d{4}$/, 'Date must be in DD/MM/YYYY format'),
@@ -19,10 +17,12 @@ const joinFormSchema = z.object({
 
 type JoinFormData = z.infer<typeof joinFormSchema>
 
-// Your Google Apps Script Web App URL
+interface StartNowModalProps {
+  isOpen: boolean
+  onClose: () => void
+}
 const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxAIAycmuV-TtCrgXuGFGOYycA7z_WC7TTJr5QBZHnKqAHl9bjvwKN3AZ3U0X2eRSIjyQ/exec'
-
-const Join: React.FC = () => {
+const StartNowModal: React.FC<StartNowModalProps> = ({ isOpen, onClose }) => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitSuccess, setSubmitSuccess] = useState(false)
   const [submitError, setSubmitError] = useState('')
@@ -40,110 +40,112 @@ const Join: React.FC = () => {
   })
 
   const onSubmit: SubmitHandler<JoinFormData> = async (data) => {
-    setIsSubmitting(true)
-    setSubmitError('')
+  setIsSubmitting(true)
+  setSubmitError('')
+  
+  try {
+    console.log('1. Starting submission with data:', data)
     
-    try {
-      console.log('1. Starting submission with data:', data)
-      
-      // Create FormData
-      const formData = new FormData()
-      formData.append('name', data.name)
-      formData.append('dob', data.dob)
-      formData.append('location', data.location)
-      formData.append('profession', data.profession)
-      formData.append('country', data.country)
-      formData.append('gender', data.gender)
-      formData.append('reason', data.reason)
-      formData.append('source', 'join_section') // Changed from navbar_popup to join_section
-      
-      console.log('2. FormData created')
-      
-      // Log each form entry
-      for (let pair of formData.entries()) {
-        console.log('3. Form entry:', pair[0], pair[1])
-      }
-      
-      // Send to Google Script
-      console.log('4. Sending to URL:', GOOGLE_SCRIPT_URL)
-      
-      const response = await fetch(GOOGLE_SCRIPT_URL, {
-        method: 'POST',
-        body: formData
-      })
-      
-      console.log('5. Response received:', response)
-      
-      // Try to get response text
-      const responseText = await response.text()
-      console.log('6. Response text:', responseText)
-      
-      // If we get here, assume success
-      setSubmitSuccess(true)
-      reset()
-      
-      console.log('7. Submission successful')
-      
-      // Reset success message after 5 seconds
-      setTimeout(() => {
-        setSubmitSuccess(false)
-      }, 5000)
-      
-    } catch (error) {
-      console.error('❌ Submission error:', error)
-      setSubmitError('Something went wrong. Please try again.')
-    } finally {
-      setIsSubmitting(false)
+    // Create FormData
+    const formData = new FormData()
+    formData.append('name', data.name)
+    formData.append('dob', data.dob)
+    formData.append('location', data.location)
+    formData.append('profession', data.profession)
+    formData.append('country', data.country)
+    formData.append('gender', data.gender)
+    formData.append('reason', data.reason)
+    formData.append('source', 'navbar_popup')
+    
+    console.log('2. FormData created')
+    
+    // Log each form entry
+    for (let pair of formData.entries()) {
+      console.log('3. Form entry:', pair[0], pair[1])
     }
+    
+    // Send to Google Script
+    console.log('4. Sending to URL:', GOOGLE_SCRIPT_URL)
+    
+    const response = await fetch(GOOGLE_SCRIPT_URL, {
+      method: 'POST',
+      body: formData
+    })
+    
+    console.log('5. Response received:', response)
+    
+    // Try to get response text
+    const responseText = await response.text()
+    console.log('6. Response text:', responseText)
+    
+    // If we get here, assume success
+    setSubmitSuccess(true)
+    reset()
+    
+    console.log('7. Submission successful')
+    
+    setTimeout(() => {
+      setSubmitSuccess(false)
+      onClose()
+    }, 2000)
+    
+  } catch (error) {
+    console.error('❌ Submission error:', error)
+    setSubmitError('Something went wrong. Please try again.')
+  } finally {
+    setIsSubmitting(false)
   }
+}
+
+  if (!isOpen) return null
 
   return (
-    <section id="join" className="relative py-20 md:py-28 overflow-hidden">
-      {/* Background Image */}
-      <div className="absolute inset-0 z-0">
-        <img 
-          src={joinBg}
-          alt="Join community background"
-          className="w-full h-full object-cover"
-        />
-        {/* Dark gradient overlay - black on left, transparent on right */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/95 to-black/80" />
-      </div>
+    <>
+      {/* Backdrop */}
+      <div 
+        className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 transition-opacity"
+        onClick={onClose}
+      />
       
-      {/* Content - Left aligned with max-width */}
-      <div className="relative z-10 container-custom">
-        <div className="max-w-2xl">
-          {/* Section Header */}
-          <div className="mb-8">
-            <span className="text-red-500 font-semibold text-sm uppercase tracking-wider">BECOME A MEMBER</span>
-            <h2 className="heading-secondary text-white mt-2 mb-4">
-              Join the <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-700">Thrill</span>
-            </h2>
-            <p className="text-base text-gray-300">
-              Become part of our family of adventure seekers. Fill out the form below and 
-              we'll get back to you with details about upcoming rides and events.
-            </p>
-          </div>
-
-          {/* Form Container */}
-          <div>
-            {/* Success Message */}
-            {submitSuccess && (
-              <div className="mb-6 p-4 bg-green-500/10 border border-green-500/30 rounded-lg flex items-center gap-3 text-green-500 backdrop-blur-sm">
-                <CheckCircle size={20} />
-                <span>Thank you for joining! We'll be in touch soon.</span>
+      {/* Modal */}
+      <div className="fixed inset-0 z-50 overflow-y-auto">
+        <div className="flex min-h-full items-center justify-center p-4">
+          <div 
+            className="relative w-full max-w-2xl bg-gradient-to-b from-gray-900 to-black border border-red-600/30 rounded-2xl shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Header */}
+            <div className="flex items-center justify-between p-6 border-b border-white/10">
+              <div className="flex items-center gap-3">
+                <Bike className="w-6 h-6 text-red-500" />
+                <h2 className="text-2xl font-bold text-white">Join the Thrill</h2>
               </div>
-            )}
+              <button
+                onClick={onClose}
+                className="text-gray-400 hover:text-white transition-colors"
+              >
+                <X size={24} />
+              </button>
+            </div>
 
-            {/* Error Message */}
-            {submitError && (
-              <div className="mb-6 p-4 bg-red-500/10 border border-red-500/30 rounded-lg flex items-center gap-3 text-red-500 backdrop-blur-sm">
-                <span>{submitError}</span>
-              </div>
-            )}
+            {/* Body */}
+            <div className="p-6 max-h-[70vh] overflow-y-auto custom-scrollbar">
+              {/* Success Message */}
+              {submitSuccess && (
+                <div className="mb-6 p-4 bg-green-500/10 border border-green-500/30 rounded-lg flex items-center gap-3 text-green-500">
+                  <CheckCircle size={20} />
+                  <span>Thank you for joining! We'll be in touch soon.</span>
+                </div>
+              )}
 
-            {/* Form */}
-            <div className="bg-black/60 backdrop-blur-md border border-white/10 rounded-2xl p-6 md:p-8 shadow-2xl">
+              {/* Error Message */}
+              {submitError && (
+                <div className="mb-6 p-4 bg-red-500/10 border border-red-500/30 rounded-lg flex items-center gap-3 text-red-500">
+                  <span>{submitError}</span>
+                </div>
+              )}
+
+              {/* Form */}
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
                 <div className="grid md:grid-cols-2 gap-4">
                   {/* Name Field */}
@@ -282,6 +284,9 @@ const Join: React.FC = () => {
                   )}
                 </div>
 
+                {/* Hidden field to identify source */}
+                <input type="hidden" name="source" value="navbar_popup" />
+
                 {/* Submit Button */}
                 <div className="pt-2">
                   <button
@@ -303,9 +308,9 @@ const Join: React.FC = () => {
               </form>
             </div>
 
-            {/* Trust Badge */}
-            <div className="mt-4 text-left">
-              <p className="text-xs text-gray-400">
+            {/* Footer */}
+            <div className="p-6 border-t border-white/10 text-center">
+              <p className="text-xs text-gray-500">
                 By joining, you agree to our{' '}
                 <a href="#" className="text-red-500 hover:text-red-400 transition-colors">Terms</a>
                 {' '}and{' '}
@@ -315,8 +320,26 @@ const Join: React.FC = () => {
           </div>
         </div>
       </div>
-    </section>
+
+      {/* Custom scrollbar styles */}
+      <style>{`
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+          background: rgba(255,255,255,0.05);
+          border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: rgba(220,38,38,0.5);
+          border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+          background: rgba(220,38,38,0.8);
+        }
+      `}</style>
+    </>
   )
 }
 
-export default Join
+export default StartNowModal
