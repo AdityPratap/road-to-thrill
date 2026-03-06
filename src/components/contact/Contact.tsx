@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react'
-import { Mail, Phone, MapPin, Facebook, Instagram, Youtube, MessageSquare, Send, CheckCircle, AlertCircle } from 'lucide-react'
+import { Mail, Phone, MapPin, Facebook, Instagram, Twitter, MessageSquare, Send, CheckCircle, AlertCircle } from 'lucide-react'
 import emailjs from '@emailjs/browser'
 
 const Contact: React.FC = () => {
@@ -81,9 +81,9 @@ const Contact: React.FC = () => {
                       href="mailto:thrill.india@gmail.com" 
                       className="text-gray-400 hover:text-red-500 transition-colors"
                     >
-                      thrill.india@gmail.com
+                      roadthrill@gmail.com
                     </a>
-                    <p className="text-sm text-gray-500 mt-1">We reply within 24 hours</p>
+                    {/* <p className="text-sm text-gray-500 mt-1">We reply within 24 hours</p> */}
                   </div>
                 </div>
 
@@ -106,8 +106,7 @@ const Contact: React.FC = () => {
                   </div>
                   <div>
                     <h4 className="font-semibold text-white mb-1">Ride Base</h4>
-                    <p className="text-gray-400">Mumbai, Maharashtra</p>
-                    <p className="text-sm text-gray-500 mt-1">India</p>
+                    <p className="text-gray-400">India</p>
                   </div>
                 </div>
               </div>
@@ -121,9 +120,9 @@ const Contact: React.FC = () => {
               </p>
               <div className="flex gap-4">
                 {[
-                  { Icon: Facebook, href: '#', label: 'Facebook', color: 'hover:bg-blue-600' },
-                  { Icon: Instagram, href: '#', label: 'Instagram', color: 'hover:bg-pink-600' },
-                  { Icon: Youtube, href: '#', label: 'YouTube', color: 'hover:bg-red-600' },
+                  { Icon: Facebook, href: 'https://www.facebook.com/share/g/1L6YCrkhBM/?mibextid=wwXIfr', label: 'Facebook', color: 'hover:bg-blue-600' },
+                  { Icon: Instagram, href: 'https://www.instagram.com/roadthrill?igsh=MWVuN3czM2RiZmZ3ZQ==', label: 'Instagram', color: 'hover:bg-pink-600' },
+                  { Icon: Twitter, href: 'https://x.com/road_thrill?s=11&t=rJ9lEZrn5KAFZ1QS_RUQVA', label: 'YouTube', color: 'hover:bg-red-600' },
                   { Icon: MessageSquare, href: '#', label: 'WhatsApp', color: 'hover:bg-green-600' }
                 ].map(({ Icon, href, label, color }) => (
                   <a
@@ -138,7 +137,7 @@ const Contact: React.FC = () => {
               </div>
             </div>
 
-            {/* Quick Response Guarantee */}
+            {/* Quick Response Guarantee
             <div className="bg-gradient-to-r from-red-600/10 to-red-800/10 border border-red-600/20 rounded-2xl p-6">
               <div className="flex items-center gap-3">
                 <CheckCircle className="w-6 h-6 text-red-500" />
@@ -147,7 +146,7 @@ const Contact: React.FC = () => {
                   <p className="text-sm text-gray-400">We value your time and always respond within a day</p>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
 
           {/* Contact Form */}
@@ -253,7 +252,7 @@ const Contact: React.FC = () => {
           <p className="text-gray-500 text-sm">
             Prefer email? Write to us directly at{' '}
             <a href="mailto:thrill.india@gmail.com" className="text-red-500 hover:text-red-400 font-semibold">
-              thrill.india@gmail.com
+              roadthrill@gmail.com
             </a>
           </p>
         </div>

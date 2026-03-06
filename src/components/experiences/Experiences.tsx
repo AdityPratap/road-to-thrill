@@ -1,8 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ChevronLeft, ChevronRight, MapPin, Calendar, Users, Route, Camera } from 'lucide-react'
+import { ChevronLeft, ChevronRight, MapPin, Calendar, Users, Route, Camera, ExternalLink } from 'lucide-react'
 import experiencesData from '../../data/experiences.json'
 import experiencesBg from '../../assets/images/calendar/calendar-bg.png'
+
+// Import your actual experience images (or use paths from JSON)
+import mountainImg from '../../assets/images/experiences/LEH81.jpg'
+import coastalImg from '../../assets/images/experiences/LEH81.jpg'
+import desertImg from '../../assets/images/experiences/LEH81.jpg'
+import fallImg from '../../assets/images/experiences/LEH81.jpg'
+import winterImg from '../../assets/images/experiences/explore.jpg'
+import springImg from '../../assets/images/experiences/mountain.jpg'
 
 interface Experience {
   id: number
@@ -14,22 +22,36 @@ interface Experience {
   description: string
   riders: number
   miles: number
+  galleryLink?: string
+  featured?: boolean
+}
+
+// Create image mapping
+const imageMap: Record<string, string> = {
+  'LEH Trip': mountainImg,
+  // 'Coastal Highway Cruise': coastalImg,
+  // 'Desert Sunset Rally': desertImg,
+  // 'Fall Colors Tour': fallImg,
+  'Winter Wanderlust': winterImg,
+  'Spring Break Rally': springImg,
 }
 
 const Experiences: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [direction, setDirection] = useState(0)
+  const [autoplay, setAutoplay] = useState(true)
   const experiences: Experience[] = experiencesData.experiences
 
-  // Continuous autoplay - always running
+  // Continuous autoplay
   useEffect(() => {
-    const timer = setInterval(() => {
-      setDirection(1)
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % experiences.length)
-    }, 4000) // Change every 4 seconds
-    
+    let timer: NodeJS.Timeout
+    if (autoplay) {
+      timer = setInterval(() => {
+        paginate(1)
+      }, 4000)
+    }
     return () => clearInterval(timer)
-  }, [experiences.length])
+  }, [currentIndex, autoplay])
 
   const slideVariants = {
     enter: (direction: number) => ({
@@ -66,6 +88,22 @@ const Experiences: React.FC = () => {
   const goToSlide = (index: number) => {
     setDirection(index > currentIndex ? 1 : -1)
     setCurrentIndex(index)
+    setAutoplay(false)
+    setTimeout(() => setAutoplay(true), 10000)
+  }
+
+  // Get image for experience
+  const getExperienceImage = (experience: Experience) => {
+    return imageMap[experience.title] || experience.image || 'https://via.placeholder.com/600x400/1a1a1a/DC2626?text=' + encodeURIComponent(experience.title)
+  }
+
+  // Handle gallery link click
+  const handleGalleryClick = (galleryLink?: string) => {
+    if (galleryLink) {
+      window.open(galleryLink, '_blank')
+    } else {
+      alert('Gallery coming soon!')
+    }
   }
 
   // Get visible cards for desktop grid view
@@ -107,7 +145,11 @@ const Experiences: React.FC = () => {
 
         {/* Mobile Carousel (1 card) */}
         <div className="block lg:hidden">
-          <div className="relative h-[500px]">
+          <div 
+            className="relative h-[500px]"
+            onMouseEnter={() => setAutoplay(false)}
+            onMouseLeave={() => setAutoplay(true)}
+          >
             <AnimatePresence initial={false} custom={direction}>
               <motion.div
                 key={currentIndex}
@@ -137,10 +179,24 @@ const Experiences: React.FC = () => {
                   {/* Image Container */}
                   <div className="relative h-56 overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent z-10" />
-                    <div className="w-full h-full bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
-                      <Camera className="w-12 h-12 text-gray-700" />
-                    </div>
+                    <img 
+                      src={getExperienceImage(experiences[currentIndex])}
+                      alt={experiences[currentIndex].title}
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement
+                        target.onerror = null
+                        target.src = `https://via.placeholder.com/600x400/1a1a1a/DC2626?text=${encodeURIComponent(experiences[currentIndex].title)}`
+                      }}
+                    />
                     
+                    {/* Featured Badge */}
+                    {experiences[currentIndex].featured && (
+                      <div className="absolute top-4 left-4 z-20 bg-gradient-to-r from-yellow-500 to-yellow-600 text-black px-3 py-1.5 rounded-full text-xs font-semibold shadow-lg">
+                        ⭐ Featured
+                      </div>
+                    )}
+
                     {/* Date Badge */}
                     <div className="absolute top-4 right-4 z-20 bg-gradient-to-r from-red-600 to-red-700 text-white px-3 py-1.5 rounded-full text-sm font-semibold shadow-lg shadow-red-600/30">
                       {experiences[currentIndex].date}
@@ -178,12 +234,14 @@ const Experiences: React.FC = () => {
                       </div>
                     </div>
 
-                    {/* View Gallery Button */}
-                    <button className="w-full bg-transparent border border-red-600/50 text-white py-2.5 rounded-lg font-semibold text-sm hover:bg-red-600 transition-all duration-300 group/btn">
-                      <span className="flex items-center justify-center gap-2">
-                        View Gallery
-                        <Camera size={16} className="group-hover/btn:translate-x-1 transition-transform" />
-                      </span>
+                    {/* View Gallery Button with Drive Link */}
+                    <button 
+                      onClick={() => handleGalleryClick(experiences[currentIndex].galleryLink)}
+                      className="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white py-2.5 rounded-lg font-semibold text-sm transition-all duration-300 group/btn flex items-center justify-center gap-2"
+                    >
+                      <Camera size={16} />
+                      View Gallery
+                      <ExternalLink size={14} className="group-hover/btn:translate-x-1 transition-transform" />
                     </button>
                   </div>
                 </div>
@@ -208,7 +266,11 @@ const Experiences: React.FC = () => {
         </div>
 
         {/* Desktop Grid View (3 cards) */}
-        <div className="hidden lg:block">
+        <div 
+          className="hidden lg:block"
+          onMouseEnter={() => setAutoplay(false)}
+          onMouseLeave={() => setAutoplay(true)}
+        >
           <div className="grid grid-cols-3 gap-6">
             {getVisibleCards().map((experience, idx) => (
               <div 
@@ -218,10 +280,24 @@ const Experiences: React.FC = () => {
                 {/* Image Container */}
                 <div className="relative h-56 overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent z-10" />
-                  <div className="w-full h-full bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
-                    <Camera className="w-12 h-12 text-gray-700" />
-                  </div>
+                  <img 
+                    src={getExperienceImage(experience)}
+                    alt={experience.title}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement
+                      target.onerror = null
+                      target.src = `https://via.placeholder.com/600x400/1a1a1a/DC2626?text=${encodeURIComponent(experience.title)}`
+                    }}
+                  />
                   
+                  {/* Featured Badge */}
+                  {experience.featured && (
+                    <div className="absolute top-4 left-4 z-20 bg-gradient-to-r from-yellow-500 to-yellow-600 text-black px-3 py-1.5 rounded-full text-xs font-semibold shadow-lg">
+                      ⭐ Featured
+                    </div>
+                  )}
+
                   {/* Date Badge */}
                   <div className="absolute top-4 right-4 z-20 bg-gradient-to-r from-red-600 to-red-700 text-white px-3 py-1.5 rounded-full text-sm font-semibold shadow-lg shadow-red-600/30">
                     {experience.date}
@@ -259,12 +335,14 @@ const Experiences: React.FC = () => {
                     </div>
                   </div>
 
-                  {/* View Gallery Button */}
-                  <button className="w-full bg-transparent border border-red-600/50 text-white py-2.5 rounded-lg font-semibold text-sm hover:bg-red-600 transition-all duration-300 group/btn">
-                    <span className="flex items-center justify-center gap-2">
-                      View Gallery
-                      <Camera size={16} className="group-hover/btn:translate-x-1 transition-transform" />
-                    </span>
+                  {/* View Gallery Button with Drive Link */}
+                  <button 
+                    onClick={() => handleGalleryClick(experience.galleryLink)}
+                    className="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white py-2.5 rounded-lg font-semibold text-sm transition-all duration-300 group/btn flex items-center justify-center gap-2"
+                  >
+                    <Camera size={16} />
+                    View Gallery
+                    <ExternalLink size={14} className="group-hover/btn:translate-x-1 transition-transform" />
                   </button>
                 </div>
               </div>
@@ -340,3 +418,8 @@ const Experiences: React.FC = () => {
 }
 
 export default Experiences
+
+
+
+
+

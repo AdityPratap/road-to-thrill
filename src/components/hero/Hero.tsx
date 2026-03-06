@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { Instagram, Twitter, Facebook, Youtube } from 'lucide-react'
 
 // Import your 3 background images
-import meetBg from '../../assets/images/hero/meet.jpg'
-import travelBg from '../../assets/images/hero/travel.jpg'
-import discoverBg from '../../assets/images/hero/discover.jpg'
+import meetBg from '../../assets/images/events/Ride-1.jpeg'
+import travelBg from '../../assets/images/events/Ride-2.jpeg'
+import discoverBg from '../../assets/images/events/Ride-3.jpeg'
 
 const Hero: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0)
@@ -113,10 +113,10 @@ const Hero: React.FC = () => {
           {/* Social Icons */}
           <div className="flex gap-4 sm:gap-5">
             {[
-              { Icon: Instagram, href: '#' },
-              { Icon: Twitter, href: '#' },
-              { Icon: Facebook, href: '#' },
-              { Icon: Youtube, href: '#' }
+              { Icon: Instagram, href: 'https://www.instagram.com/roadthrill?igsh=MWVuN3czM2RiZmZ3ZQ==' },
+              { Icon: Twitter, href: 'https://x.com/road_thrill?s=11&t=rJ9lEZrn5KAFZ1QS_RUQVA' },
+              { Icon: Facebook, href: 'https://www.facebook.com/share/g/1L6YCrkhBM/?mibextid=wwXIfr' }
+              // { Icon: Youtube, href: '#' }
             ].map(({ Icon, href }, index) => (
               <a
                 key={index}

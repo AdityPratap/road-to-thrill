@@ -15,12 +15,31 @@ declare module '*.png' {
   export default content
 }
 
-declare module '*.jpeg' {
-  const content: string
-  export default content
+declare module 'swiper/react' {
+  import * as React from 'react'
+  import { SwiperOptions } from 'swiper/types'
+  
+  export class Swiper extends React.Component<SwiperOptions & {
+    onSwiper?: (swiper: any) => void
+    onSlideChange?: (swiper: any) => void
+    onBeforeInit?: (swiper: any) => void
+    className?: string
+    children?: React.ReactNode
+  }> {}
+  
+  export class SwiperSlide extends React.Component<{
+    children?: React.ReactNode
+    className?: string
+    virtualIndex?: number
+  }> {}
 }
 
-declare module '*.gif' {
-  const content: string
-  export default content
+declare module 'swiper/modules' {
+  export const Navigation: any
+  export const Pagination: any
+  export const Autoplay: any
 }
+
+declare module 'swiper/css' {}
+declare module 'swiper/css/navigation' {}
+declare module 'swiper/css/pagination' {}

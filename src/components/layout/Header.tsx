@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Menu, X } from 'lucide-react'
-import logo from '../../assets/icons/logo.svg'
+import logo from '../../assets/icons/logo road thrill.png'
 import StartNowModal from '../StartNowModal' // Import the modal
 
 const Header: React.FC = () => {
